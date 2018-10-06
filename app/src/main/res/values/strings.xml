@@ -2,4 +2,5 @@
     <string name="app_name">WeatherApp</string>
     <string name="location_search_hint">Search locations:</string>
     <string name="title_activity_maps">Map</string>
+    <string name="error_message">Oh no, something is wrong...</string>
 </resources>

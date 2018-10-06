@@ -1,6 +1,5 @@
-package hr.ferit.iveselin.weatherapp.current_weather.ui;
+package hr.ferit.iveselin.weatherapp.ui.current_weather.view;
 
-import android.database.CursorIndexOutOfBoundsException;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,19 +9,25 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import hr.ferit.iveselin.weatherapp.R;
+import hr.ferit.iveselin.weatherapp.ui.current_weather.CurrentWeatherInterface;
+import hr.ferit.iveselin.weatherapp.ui.current_weather.presentation.CurrentWeatherPresenter;
 
-public class CurrentWeatherView extends Fragment {
+public class CurrentWeatherView extends Fragment implements CurrentWeatherInterface.View {
 
     public static CurrentWeatherView newInstance() {
         CurrentWeatherView currentWeatherView = new CurrentWeatherView();
         return currentWeatherView;
     }
 
+
+    private CurrentWeatherInterface.Presenter presenter;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: 5.10.2018. do you need it??
+        presenter = new CurrentWeatherPresenter();
+        presenter.setView(this);
     }
 
 
@@ -40,6 +45,13 @@ public class CurrentWeatherView extends Fragment {
     }
 
     private void setUi() {
+
+
+        presenter.viewReady();
+    }
+
+    @Override
+    public void showData() {
 
     }
 }

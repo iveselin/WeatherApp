@@ -1,4 +1,4 @@
-package hr.ferit.iveselin.weatherapp.main_screen.ui;
+package hr.ferit.iveselin.weatherapp.ui.main_screen.view;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
