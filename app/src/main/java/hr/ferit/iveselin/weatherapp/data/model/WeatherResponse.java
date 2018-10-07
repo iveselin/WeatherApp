@@ -9,6 +9,7 @@ public class WeatherResponse {
     private List<Weather> weather;
     private Main main;
     private Rain rain;
+    private int dt;
 
     public Main getMain() {
         return main;
@@ -22,6 +23,9 @@ public class WeatherResponse {
         return weather;
     }
 
+    public int getDt() {
+        return dt;
+    }
 
     public class Main {
         private float temp;

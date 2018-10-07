@@ -10,7 +10,7 @@ public class BackendFactory {
     public static final String BASE_URL = "http://api.openweathermap.org/data/2.5/";
 
     private static Retrofit retrofit;
-    private static WeatherEndpoint weatherEndpoint;
+    private static ApiEndpoint apiEndpoint;
 
     private static Retrofit getRetrofitInstance() {
         if (retrofit == null) {
@@ -28,10 +28,10 @@ public class BackendFactory {
         return retrofit;
     }
 
-    public static WeatherEndpoint getWeatherEndpoint() {
-        if (weatherEndpoint == null) {
-            weatherEndpoint = getRetrofitInstance().create(WeatherEndpoint.class);
+    public static ApiEndpoint getApiEndpoint() {
+        if (apiEndpoint == null) {
+            apiEndpoint = getRetrofitInstance().create(ApiEndpoint.class);
         }
-        return weatherEndpoint;
+        return apiEndpoint;
     }
 }

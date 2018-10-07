@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.OnClick;
 import hr.ferit.iveselin.weatherapp.R;
 import hr.ferit.iveselin.weatherapp.ui.current_weather.CurrentWeatherInterface;
 import hr.ferit.iveselin.weatherapp.ui.current_weather.presentation.CurrentWeatherPresenter;
@@ -53,5 +54,10 @@ public class CurrentWeatherView extends Fragment implements CurrentWeatherInterf
     @Override
     public void showData() {
 
+    }
+
+    @OnClick(R.id.weather_refresh)
+    void onRefreshClicked() {
+        presenter.refreshClicked();
     }
 }

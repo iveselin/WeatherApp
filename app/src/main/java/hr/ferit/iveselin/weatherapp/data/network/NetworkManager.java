@@ -1,5 +1,6 @@
 package hr.ferit.iveselin.weatherapp.data.network;
 
+import hr.ferit.iveselin.weatherapp.data.model.ForecastResponse;
 import hr.ferit.iveselin.weatherapp.data.model.WeatherResponse;
 import retrofit2.Call;
 
@@ -9,10 +10,11 @@ public class NetworkManager implements NetworkInterface {
 
     private static NetworkManager networkManager;
 
-    private static WeatherEndpoint weatherEndpoint;
+    private static ApiEndpoint apiEndpoint;
+
 
     private NetworkManager() {
-        weatherEndpoint = BackendFactory.getWeatherEndpoint();
+        apiEndpoint = BackendFactory.getApiEndpoint();
     }
 
     public static NetworkInterface getInstance() {
@@ -23,7 +25,12 @@ public class NetworkManager implements NetworkInterface {
     }
 
     @Override
-    public Call<WeatherResponse> getWeatherFromCity(String city) {
-        return weatherEndpoint.getWeatherByCityName(city, API_KEY);
+    public Call<WeatherResponse> getWeatherForCity(String city) {
+        return apiEndpoint.getWeatherByCityName(city, API_KEY);
+    }
+
+    @Override
+    public Call<ForecastResponse> getForecastForCity(String city) {
+        return apiEndpoint.getForecastByCityName(city, API_KEY);
     }
 }

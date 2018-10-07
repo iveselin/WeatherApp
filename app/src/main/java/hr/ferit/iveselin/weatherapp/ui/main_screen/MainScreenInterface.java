@@ -19,6 +19,6 @@ public interface MainScreenInterface {
 
         void viewReady();
 
-        void refreshClicked();
+        void searchPressed(String searchCityString);
     }
 }

@@ -94,8 +94,5 @@ public class MainActivity extends AppCompatActivity implements MainScreenInterfa
         Toast.makeText(this, R.string.error_message, Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick(R.id.weather_refresh)
-    void onRefreshClicked() {
-        presenter.refreshClicked();
-    }
+
 }

@@ -9,6 +9,8 @@ public interface CurrentWeatherInterface {
     interface Presenter {
         void setView(View view);
 
+        void refreshClicked();
+
         void viewReady();
     }
 }

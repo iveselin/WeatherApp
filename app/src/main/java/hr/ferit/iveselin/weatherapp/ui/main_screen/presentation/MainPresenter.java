@@ -12,6 +12,7 @@ public class MainPresenter implements MainScreenInterface.Presenter {
 
     private MainScreenInterface.View view;
     private NetworkInterface networkManager;
+    private String city;
 
     public MainPresenter() {
         networkManager = NetworkManager.getInstance();
@@ -25,16 +26,20 @@ public class MainPresenter implements MainScreenInterface.Presenter {
 
     @Override
     public void viewReady() {
+        // TODO: 6.10.2018. check for location permissions and display weather for that city
+        city = "Osijek";
         getData();
     }
 
+
     @Override
-    public void refreshClicked() {
+    public void searchPressed(String searchCityString) {
+        city = searchCityString;
         getData();
     }
 
     private void getData() {
-        networkManager.getWeatherFromCity("Osijek").enqueue(new Callback<WeatherResponse>() {
+        networkManager.getWeatherForCity(city).enqueue(new Callback<WeatherResponse>() {
             @Override
             public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
                 view.showTemp(response.body().getMain().getTemp());

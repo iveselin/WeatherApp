@@ -12,8 +12,14 @@ public class CurrentWeatherPresenter implements CurrentWeatherInterface.Presente
         this.view = view;
     }
 
+
     @Override
     public void viewReady() {
         view.showData();
+    }
+
+    @Override
+    public void refreshClicked() {
+
     }
 }
