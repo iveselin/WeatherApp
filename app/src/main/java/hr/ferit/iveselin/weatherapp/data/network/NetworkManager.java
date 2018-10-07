@@ -3,6 +3,8 @@ package hr.ferit.iveselin.weatherapp.data.network;
 import hr.ferit.iveselin.weatherapp.data.model.ForecastResponse;
 import hr.ferit.iveselin.weatherapp.data.model.WeatherResponse;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NetworkManager implements NetworkInterface {
 
@@ -25,12 +27,32 @@ public class NetworkManager implements NetworkInterface {
     }
 
     @Override
-    public Call<WeatherResponse> getWeatherForCity(String city) {
-        return apiEndpoint.getWeatherByCityName(city, API_KEY);
+    public void getWeatherForCity(String city, final OnFinishedWeatherListener listener) {
+        apiEndpoint.getWeatherByCityName(city, API_KEY).enqueue(new Callback<WeatherResponse>() {
+            @Override
+            public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
+                listener.onFinished(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<WeatherResponse> call, Throwable t) {
+                listener.onFailure(t);
+            }
+        });
     }
 
     @Override
-    public Call<ForecastResponse> getForecastForCity(String city) {
-        return apiEndpoint.getForecastByCityName(city, API_KEY);
+    public void getForecastForCity(String city, final OnFinishedForecastListener listener) {
+        apiEndpoint.getForecastByCityName(city, API_KEY).enqueue(new Callback<ForecastResponse>() {
+            @Override
+            public void onResponse(Call<ForecastResponse> call, Response<ForecastResponse> response) {
+                listener.onFinished(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ForecastResponse> call, Throwable t) {
+                listener.onFailure(t);
+            }
+        });
     }
 }

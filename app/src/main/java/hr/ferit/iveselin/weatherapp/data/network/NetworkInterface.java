@@ -5,7 +5,20 @@ import hr.ferit.iveselin.weatherapp.data.model.WeatherResponse;
 import retrofit2.Call;
 
 public interface NetworkInterface {
-    Call<WeatherResponse> getWeatherForCity(String city);
 
-    Call<ForecastResponse> getForecastForCity(String city);
+    void getWeatherForCity(String city, OnFinishedWeatherListener listener);
+
+    void getForecastForCity(String city, OnFinishedForecastListener listener);
+
+    interface OnFinishedWeatherListener {
+        void onFinished(WeatherResponse data);
+
+        void onFailure(Throwable throwable);
+    }
+
+    interface OnFinishedForecastListener {
+        void onFinished(ForecastResponse data);
+
+        void onFailure(Throwable throwable);
+    }
 }

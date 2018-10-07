@@ -5,11 +5,13 @@ public interface MainScreenInterface {
 
     interface View {
 
-        void showTemp(float temp);
-
         void showErrorMessage();
 
-        void showData();
+        void checkLocationPermission();
+
+        void askLocationPermission();
+
+        void showMap();
     }
 
 
@@ -20,5 +22,9 @@ public interface MainScreenInterface {
         void viewReady();
 
         void searchPressed(String searchCityString);
+
+        void mapPressed();
+
+        void locationPermissionGranted(boolean isGranted);
     }
 }

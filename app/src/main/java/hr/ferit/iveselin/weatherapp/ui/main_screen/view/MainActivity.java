@@ -1,6 +1,11 @@
 package hr.ferit.iveselin.weatherapp.ui.main_screen.view;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,17 +36,23 @@ public class MainActivity extends AppCompatActivity implements MainScreenInterfa
     private static final LatLngBounds CRO_BOUNDS = new LatLngBounds(new LatLng(13.6569755388, 42.47999136),
             new LatLng(19.3904757016, 46.5037509222));
 
+    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
+    public static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
+    public static final int LOCATION_PERMISSION_REQUEST_CODE = 1111;
+    public static final float DEFAULT_ZOOM = 15f;
+
     @BindView(R.id.location_input_text)
     AutoCompleteTextView locationInput;
 
     @BindView(R.id.weather_tabs)
     TabLayout weatherTabs;
-
     @BindView(R.id.weather_view_pager)
     ViewPager weatherPager;
 
 
     private GeoDataClient geoDataClient;
+    private SimpleFragmentPageAdapter pageAdapter;
+    private boolean locationPermissionGranted;
 
     private MainScreenInterface.Presenter presenter;
 
@@ -58,6 +69,43 @@ public class MainActivity extends AppCompatActivity implements MainScreenInterfa
     }
 
 
+    @Override
+    public void checkLocationPermission() {
+        if ((ContextCompat.checkSelfPermission(getApplicationContext(), COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+                && (ContextCompat.checkSelfPermission(getApplicationContext(), FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
+            presenter.locationPermissionGranted(true);
+        } else {
+            askLocationPermission();
+        }
+    }
+
+    @Override
+    public void askLocationPermission() {
+        String[] permissions = {FINE_LOCATION, COURSE_LOCATION};
+        ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
+    }
+
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case LOCATION_PERMISSION_REQUEST_CODE: {
+                if (grantResults.length > 0) {
+                    for (int grantResult : grantResults) {
+                        if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                            presenter.locationPermissionGranted(false);
+                            return;
+                        }
+                    }
+                    presenter.locationPermissionGranted(true);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void showMap() {
+
+    }
+
     private void setUi() {
 
         geoDataClient = Places.getGeoDataClient(this);
@@ -68,9 +116,9 @@ public class MainActivity extends AppCompatActivity implements MainScreenInterfa
         tabTitles.add("Current");
         tabTitles.add("5 days");
 
-        SimpleFragmentPageAdapter pageAdapter = new SimpleFragmentPageAdapter(getSupportFragmentManager());
+        pageAdapter = new SimpleFragmentPageAdapter(getSupportFragmentManager());
         pageAdapter.setTabTitles(tabTitles);
-        pageAdapter.addFragment(CurrentWeatherView.newInstance());
+        pageAdapter.addFragment(CurrentWeatherView.newInstance("Osijek"));
         pageAdapter.addFragment(FiveDaysWeatherView.newInstance());
 
         weatherPager.setAdapter(pageAdapter);
@@ -80,18 +128,13 @@ public class MainActivity extends AppCompatActivity implements MainScreenInterfa
     }
 
     @Override
-    public void showData() {
-
-    }
-
-    @Override
-    public void showTemp(float temp) {
-        Toast.makeText(this, "Temp is: " + temp, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void showErrorMessage() {
         Toast.makeText(this, R.string.error_message, Toast.LENGTH_SHORT).show();
+    }
+
+    @OnClick(R.id.location_input_map)
+    void mapClicked() {
+        presenter.mapPressed();
     }
 
 
