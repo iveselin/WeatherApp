@@ -1,12 +1,18 @@
 package hr.ferit.iveselin.weatherapp.ui.five_days_weather.presentation;
 
+import android.util.Log;
+
 import com.google.android.gms.maps.model.LatLng;
 
 import hr.ferit.iveselin.weatherapp.data.model.ForecastResponse;
 import hr.ferit.iveselin.weatherapp.data.network.NetworkInterface;
 import hr.ferit.iveselin.weatherapp.ui.five_days_weather.FiveDaysWeatherInterface;
 
+import static android.support.constraint.Constraints.TAG;
+
 public class FiveDaysWeatherPresenter implements FiveDaysWeatherInterface.Presenter, NetworkInterface.OnFinishedForecastListener {
+
+    private static final String TAG = "FiveDaysWeatherPresente";
 
     private FiveDaysWeatherInterface.View view;
 
@@ -40,7 +46,8 @@ public class FiveDaysWeatherPresenter implements FiveDaysWeatherInterface.Presen
 
     @Override
     public void onFinished(ForecastResponse data) {
-        view.showData(data);
+        Log.d(TAG, "onFinished: displaying data: " + data.getList().toString());
+        view.showData(data.getList());
     }
 
     @Override

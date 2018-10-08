@@ -9,7 +9,7 @@ public class WeatherResponse {
     private List<Weather> weather;
     private Main main;
     private Rain rain;
-    private int dt;
+    private long dt;
     private String name;
 
     public Main getMain() {
@@ -24,7 +24,7 @@ public class WeatherResponse {
         return weather;
     }
 
-    public int getDt() {
+    public long getDt() {
         return dt;
     }
 
@@ -80,9 +80,9 @@ public class WeatherResponse {
     public class Rain {
 
         @SerializedName("3h")
-        private int mmOfRain;
+        private double mmOfRain;
 
-        public int getMmOfRain() {
+        public double getMmOfRain() {
             return mmOfRain;
         }
     }

@@ -49,8 +49,8 @@
         android:layout_marginStart="@dimen/default_margin"
         android:layout_marginTop="@dimen/default_margin"
         android:layout_marginEnd="@dimen/default_margin"
-        android:maxWidth="@dimen/max_weather_icon_size"
-        android:maxHeight="@dimen/max_weather_icon_size"
+        android:minWidth="@dimen/mid_icon_size"
+        android:minHeight="@dimen/mid_icon_size"
         tools:src="@drawable/ic_refresh" />
 
     <TextView

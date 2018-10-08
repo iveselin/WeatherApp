@@ -54,11 +54,18 @@
             android:src="@drawable/ic_map" />
     </RelativeLayout>
 
+    <Button
+        android:id="@+id/location_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/location_input"
+        android:text="@string/location_search_text" />
+
     <android.support.design.widget.TabLayout
         android:id="@+id/weather_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/location_input"
+        android:layout_below="@id/location_search"
 
         app:tabBackground="@color/colorPrimary"
         app:tabIndicatorColor="@color/colorPrimaryDark"

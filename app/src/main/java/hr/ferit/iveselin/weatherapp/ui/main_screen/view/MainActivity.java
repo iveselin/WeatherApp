@@ -187,6 +187,11 @@ public class MainActivity extends AppCompatActivity implements MainScreenInterfa
         Toast.makeText(this, R.string.error_message, Toast.LENGTH_SHORT).show();
     }
 
+    @OnClick(R.id.location_search)
+    void searchClicked() {
+        presenter.searchPressed(locationInput.getText().toString());
+    }
+
     @OnClick(R.id.location_input_map)
     void mapClicked() {
         presenter.mapPressed();

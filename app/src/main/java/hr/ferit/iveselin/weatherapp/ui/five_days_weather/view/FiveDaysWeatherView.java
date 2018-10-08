@@ -4,16 +4,23 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.List;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import hr.ferit.iveselin.weatherapp.R;
 import hr.ferit.iveselin.weatherapp.base.BaseViewPagerFragment;
 import hr.ferit.iveselin.weatherapp.data.model.ForecastResponse;
+import hr.ferit.iveselin.weatherapp.data.model.WeatherResponse;
 import hr.ferit.iveselin.weatherapp.data.network.NetworkManager;
 import hr.ferit.iveselin.weatherapp.ui.five_days_weather.FiveDaysWeatherInterface;
 import hr.ferit.iveselin.weatherapp.ui.five_days_weather.presentation.FiveDaysWeatherPresenter;
@@ -24,7 +31,12 @@ public class FiveDaysWeatherView extends BaseViewPagerFragment implements FiveDa
         return new FiveDaysWeatherView();
     }
 
+    @BindView(R.id.forecast_list)
+    RecyclerView forecastListView;
+
     private FiveDaysWeatherInterface.Presenter presenter;
+
+    private ForecastAdapter forecastAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,12 +61,21 @@ public class FiveDaysWeatherView extends BaseViewPagerFragment implements FiveDa
     }
 
     private void setUi() {
+        forecastAdapter = new ForecastAdapter(getActivity());
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
+
+        forecastListView.addItemDecoration(itemDecoration);
+        forecastListView.setLayoutManager(layoutManager);
+        forecastListView.setAdapter(forecastAdapter);
+
         presenter.viewReady();
     }
 
     @Override
-    public void showData(ForecastResponse data) {
-
+    public void showData(List<WeatherResponse> data) {
+        forecastAdapter.setForecasts(data);
     }
 
     @Override

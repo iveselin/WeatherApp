@@ -42,8 +42,8 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_margin="@dimen/small_margin"
-        android:maxWidth="@dimen/max_weather_icon_size"
-        android:maxHeight="@dimen/max_weather_icon_size"
+        android:minWidth="@dimen/small_weather_icon_size"
+        android:minHeight="@dimen/small_weather_icon_size"
         tools:src="@drawable/ic_refresh" />
 
 

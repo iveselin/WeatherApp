@@ -22,6 +22,7 @@ import hr.ferit.iveselin.weatherapp.data.model.WeatherResponse;
 import hr.ferit.iveselin.weatherapp.data.network.NetworkManager;
 import hr.ferit.iveselin.weatherapp.ui.current_weather.CurrentWeatherInterface;
 import hr.ferit.iveselin.weatherapp.ui.current_weather.presentation.CurrentWeatherPresenter;
+import hr.ferit.iveselin.weatherapp.util.ImageLoader;
 
 public class CurrentWeatherView extends BaseViewPagerFragment implements CurrentWeatherInterface.View {
 
@@ -88,11 +89,12 @@ public class CurrentWeatherView extends BaseViewPagerFragment implements Current
         weatherTemperature.setText(data.getMain().getTemp() + "°C");
         if (data.getRain() != null) {
             weatherRain.setVisibility(View.VISIBLE);
-            weatherRain.setText(data.getRain().getMmOfRain());
+            weatherRain.setText(data.getRain().getMmOfRain() + "mm");
         } else {
             weatherRain.setVisibility(View.GONE);
         }
         weatherPressure.setText(Float.toString(data.getMain().getPressure()));
+        ImageLoader.loadImage(getActivity(), data.getWeather().get(0).getIconId(), weatherIcon);
     }
 
     @Override
