@@ -1,0 +1,34 @@
+package hr.ferit.iveselin.weatherapp.ui.map_screen.presentation;
+
+import com.google.android.gms.maps.model.LatLng;
+
+import hr.ferit.iveselin.weatherapp.ui.map_screen.MapScreenInterface;
+
+public class MapPresenter implements MapScreenInterface.Presenter {
+
+    public static final float DEFAULT_ZOOM = 15f;
+
+    private MapScreenInterface.View view;
+
+    private LatLng location;
+
+    @Override
+    public void setView(MapScreenInterface.View view) {
+        this.view = view;
+    }
+
+    @Override
+    public void viewReady() {
+        view.moveMapCamera(location, DEFAULT_ZOOM);
+    }
+
+    @Override
+    public void startingLocation(LatLng latLng) {
+        this.location = latLng;
+    }
+
+    @Override
+    public void mapClicked(LatLng clickedLocation) {
+        view.showDialog();
+    }
+}

@@ -14,6 +14,7 @@ public class MainPresenter implements MainScreenInterface.Presenter {
     private MainScreenInterface.View view;
 
     private boolean locationPermissionGranted = false;
+    private LatLng currentLocation;
 
     public MainPresenter() {
 
@@ -38,7 +39,11 @@ public class MainPresenter implements MainScreenInterface.Presenter {
 
     @Override
     public void mapPressed() {
-        view.showMap();
+        if (locationPermissionGranted) {
+            view.showMap(currentLocation);
+        } else {
+            view.showMap(DEFAULT_LOCATION_OSIJEK);
+        }
     }
 
     @Override
@@ -49,7 +54,8 @@ public class MainPresenter implements MainScreenInterface.Presenter {
 
     @Override
     public void currentLocation(double latitude, double longitude) {
-        view.setLocation(new LatLng(latitude, longitude));
+        this.currentLocation = new LatLng(latitude, longitude);
+        view.setLocation(currentLocation);
     }
 
     @Override

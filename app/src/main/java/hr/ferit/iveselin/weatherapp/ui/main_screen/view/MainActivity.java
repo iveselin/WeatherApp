@@ -1,6 +1,7 @@
 package hr.ferit.iveselin.weatherapp.ui.main_screen.view;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -38,6 +39,7 @@ import hr.ferit.iveselin.weatherapp.ui.current_weather.view.CurrentWeatherView;
 import hr.ferit.iveselin.weatherapp.ui.five_days_weather.view.FiveDaysWeatherView;
 import hr.ferit.iveselin.weatherapp.ui.main_screen.MainScreenInterface;
 import hr.ferit.iveselin.weatherapp.ui.main_screen.presentation.MainPresenter;
+import hr.ferit.iveselin.weatherapp.ui.map_screen.view.MapActivity;
 
 public class MainActivity extends AppCompatActivity implements MainScreenInterface.View {
 
@@ -46,8 +48,20 @@ public class MainActivity extends AppCompatActivity implements MainScreenInterfa
     private static final LatLngBounds CRO_BOUNDS = new LatLngBounds(new LatLng(13.6569755388, 42.47999136),
             new LatLng(19.3904757016, 46.5037509222));
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
-    public static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
-    public static final int LOCATION_PERMISSION_REQUEST_CODE = 1111;
+    private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
+
+    private static final String KEY_PICKED_LONGITUDE = "picked_longitude";
+    private static final String KEY_PICKED_LATITUDE = "picked_latitude";
+
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1111;
+    private static final int MAP_REQUEST_CODE = 1234;
+
+    public static Intent getResultIntent(double longitude, double latitude) {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(KEY_PICKED_LONGITUDE, longitude);
+        resultIntent.putExtra(KEY_PICKED_LATITUDE, latitude);
+        return resultIntent;
+    }
 
     @BindView(R.id.location_input_text)
     AutoCompleteTextView locationInput;
@@ -198,9 +212,18 @@ public class MainActivity extends AppCompatActivity implements MainScreenInterfa
     }
 
     @Override
-    public void showMap() {
-        // TODO: 8.10.2018. open map activity for result address
+    public void showMap(LatLng location) {
+        startActivityForResult(MapActivity.getLaunchIntent(this, location.longitude, location.latitude), MAP_REQUEST_CODE);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (resultCode == RESULT_OK) {
+            if (requestCode == MAP_REQUEST_CODE) {
+                // TODO: 8.10.2018. extract data from mapactivity
+            }
+        }
+    }
 }

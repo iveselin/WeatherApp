@@ -13,7 +13,7 @@ public interface MainScreenInterface {
 
         void askLocationPermission();
 
-        void showMap();
+        void showMap(LatLng location);
 
         void setLocation(LatLng latLng);
 
