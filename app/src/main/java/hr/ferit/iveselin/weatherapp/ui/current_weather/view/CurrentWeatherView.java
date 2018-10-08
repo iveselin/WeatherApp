@@ -11,26 +11,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import hr.ferit.iveselin.weatherapp.R;
+import hr.ferit.iveselin.weatherapp.base.BaseViewPagerFragment;
 import hr.ferit.iveselin.weatherapp.data.model.WeatherResponse;
+import hr.ferit.iveselin.weatherapp.data.network.NetworkManager;
 import hr.ferit.iveselin.weatherapp.ui.current_weather.CurrentWeatherInterface;
 import hr.ferit.iveselin.weatherapp.ui.current_weather.presentation.CurrentWeatherPresenter;
 
-public class CurrentWeatherView extends Fragment implements CurrentWeatherInterface.View {
+public class CurrentWeatherView extends BaseViewPagerFragment implements CurrentWeatherInterface.View {
 
     private static final String TAG = "CurrentWeatherView";
 
     public static final String KEY_CITY = "city_to_show";
 
-    public static CurrentWeatherView newInstance(String city) {
-        Bundle args = new Bundle();
-        args.putString(KEY_CITY, city);
-        CurrentWeatherView currentWeatherView = new CurrentWeatherView();
-        currentWeatherView.setArguments(args);
-        return currentWeatherView;
+    public static CurrentWeatherView newInstance() {
+        return new CurrentWeatherView();
     }
 
     @BindView(R.id.weather_location)
@@ -51,15 +51,11 @@ public class CurrentWeatherView extends Fragment implements CurrentWeatherInterf
 
     private CurrentWeatherInterface.Presenter presenter;
 
-    private String city;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        city = getArguments().getString(KEY_CITY);
-
-        presenter = new CurrentWeatherPresenter();
+        presenter = new CurrentWeatherPresenter(NetworkManager.getInstance());
         presenter.setView(this);
     }
 
@@ -80,13 +76,13 @@ public class CurrentWeatherView extends Fragment implements CurrentWeatherInterf
     }
 
     private void setUi() {
-        presenter.viewReady(city);
+        presenter.viewReady();
     }
 
     @Override
     public void showData(WeatherResponse data) {
 
-        weatherCity.setText(city);
+        weatherCity.setText(data.getName());
         weatherDescription.setText(data.getWeather().get(0).getDescription());
         weatherHumidity.setText(data.getMain().getHumidity() + "%");
         weatherTemperature.setText(data.getMain().getTemp() + "°C");
@@ -107,5 +103,11 @@ public class CurrentWeatherView extends Fragment implements CurrentWeatherInterf
     @OnClick(R.id.weather_refresh)
     void onRefreshClicked() {
         presenter.refreshClicked();
+    }
+
+    @Override
+    public void changeLocation(LatLng location) {
+        this.location = location;
+        presenter.locationChanged(this.location);
     }
 }

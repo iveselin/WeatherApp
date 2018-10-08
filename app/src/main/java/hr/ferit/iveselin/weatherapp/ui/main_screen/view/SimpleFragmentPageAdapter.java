@@ -4,13 +4,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import hr.ferit.iveselin.weatherapp.base.BaseViewPagerFragment;
 
 public class SimpleFragmentPageAdapter extends FragmentPagerAdapter {
 
     private List<String> tabTitles = new ArrayList<>();
-    private List<Fragment> fragments = new ArrayList<>();
+    private List<BaseViewPagerFragment> fragments = new ArrayList<>();
 
     public SimpleFragmentPageAdapter(FragmentManager fm) {
         super(fm);
@@ -20,7 +24,7 @@ public class SimpleFragmentPageAdapter extends FragmentPagerAdapter {
         tabTitles = stringList;
     }
 
-    public void addFragment(Fragment fragment) {
+    public void addFragment(BaseViewPagerFragment fragment) {
         fragments.add(fragment);
     }
 
@@ -37,5 +41,12 @@ public class SimpleFragmentPageAdapter extends FragmentPagerAdapter {
     @Override
     public String getPageTitle(int position) {
         return tabTitles.get(position);
+    }
+
+
+    public void sendLocationToFragments(LatLng location) {
+        for (BaseViewPagerFragment fragment : fragments) {
+            fragment.changeLocation(location);
+        }
     }
 }

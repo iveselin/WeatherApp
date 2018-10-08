@@ -8,11 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import butterknife.ButterKnife;
 import hr.ferit.iveselin.weatherapp.R;
+import hr.ferit.iveselin.weatherapp.base.BaseViewPagerFragment;
+import hr.ferit.iveselin.weatherapp.data.model.ForecastResponse;
+import hr.ferit.iveselin.weatherapp.data.network.NetworkManager;
 import hr.ferit.iveselin.weatherapp.ui.five_days_weather.FiveDaysWeatherInterface;
 import hr.ferit.iveselin.weatherapp.ui.five_days_weather.presentation.FiveDaysWeatherPresenter;
 
-public class FiveDaysWeatherView extends Fragment implements FiveDaysWeatherInterface.View {
+public class FiveDaysWeatherView extends BaseViewPagerFragment implements FiveDaysWeatherInterface.View {
 
     public static FiveDaysWeatherView newInstance() {
         return new FiveDaysWeatherView();
@@ -24,7 +30,7 @@ public class FiveDaysWeatherView extends Fragment implements FiveDaysWeatherInte
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        presenter = new FiveDaysWeatherPresenter();
+        presenter = new FiveDaysWeatherPresenter(NetworkManager.getInstance());
         presenter.setView(this);
     }
 
@@ -38,6 +44,7 @@ public class FiveDaysWeatherView extends Fragment implements FiveDaysWeatherInte
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ButterKnife.bind(this, view);
         setUi();
     }
 
@@ -46,7 +53,18 @@ public class FiveDaysWeatherView extends Fragment implements FiveDaysWeatherInte
     }
 
     @Override
-    public void showData() {
+    public void showData(ForecastResponse data) {
 
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void changeLocation(LatLng location) {
+        this.location = location;
+        presenter.locationChanged(location);
     }
 }

@@ -10,6 +10,7 @@ public class WeatherResponse {
     private Main main;
     private Rain rain;
     private int dt;
+    private String name;
 
     public Main getMain() {
         return main;
@@ -25,6 +26,10 @@ public class WeatherResponse {
 
     public int getDt() {
         return dt;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public class Main {
@@ -53,6 +58,8 @@ public class WeatherResponse {
         public float getPressure() {
             return pressure;
         }
+
+
     }
 
     public class Weather {

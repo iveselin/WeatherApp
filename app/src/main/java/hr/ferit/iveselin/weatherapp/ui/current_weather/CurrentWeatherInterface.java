@@ -1,5 +1,7 @@
 package hr.ferit.iveselin.weatherapp.ui.current_weather;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import hr.ferit.iveselin.weatherapp.data.model.WeatherResponse;
 
 public interface CurrentWeatherInterface {
@@ -15,6 +17,8 @@ public interface CurrentWeatherInterface {
 
         void refreshClicked();
 
-        void viewReady(String city);
+        void viewReady();
+
+        void locationChanged(LatLng location);
     }
 }

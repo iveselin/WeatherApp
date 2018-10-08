@@ -1,14 +1,15 @@
 package hr.ferit.iveselin.weatherapp.data.network;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import hr.ferit.iveselin.weatherapp.data.model.ForecastResponse;
 import hr.ferit.iveselin.weatherapp.data.model.WeatherResponse;
-import retrofit2.Call;
 
 public interface NetworkInterface {
 
-    void getWeatherForCity(String city, OnFinishedWeatherListener listener);
+    void getWeatherForLocation(LatLng location, OnFinishedWeatherListener listener);
 
-    void getForecastForCity(String city, OnFinishedForecastListener listener);
+    void getForecastForLocation(LatLng location, OnFinishedForecastListener listener);
 
     interface OnFinishedWeatherListener {
         void onFinished(WeatherResponse data);

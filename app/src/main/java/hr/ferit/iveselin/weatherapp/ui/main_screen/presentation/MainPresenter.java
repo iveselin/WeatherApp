@@ -1,19 +1,22 @@
 package hr.ferit.iveselin.weatherapp.ui.main_screen.presentation;
 
-import hr.ferit.iveselin.weatherapp.data.network.NetworkInterface;
-import hr.ferit.iveselin.weatherapp.data.network.NetworkManager;
+import com.google.android.gms.maps.model.LatLng;
+
 import hr.ferit.iveselin.weatherapp.ui.main_screen.MainScreenInterface;
 
 
 public class MainPresenter implements MainScreenInterface.Presenter {
 
+    private static final String TAG = "MainPresenter";
+
+    public static final LatLng DEFAULT_LOCATION_OSIJEK = new LatLng(45.554962, 18.695514);
+
     private MainScreenInterface.View view;
-    private NetworkInterface networkManager;
-    private String city;
+
     private boolean locationPermissionGranted = false;
 
     public MainPresenter() {
-        networkManager = NetworkManager.getInstance();
+
     }
 
 
@@ -30,8 +33,7 @@ public class MainPresenter implements MainScreenInterface.Presenter {
 
     @Override
     public void searchPressed(String searchCityString) {
-        // TODO: 7.10.2018. extract city name or coordinates
-        city = searchCityString;
+        view.getLocationFromAddress(searchCityString);
     }
 
     @Override
@@ -45,12 +47,22 @@ public class MainPresenter implements MainScreenInterface.Presenter {
         getLocationWeather();
     }
 
-    private void getLocationWeather() {
-        if (locationPermissionGranted) {
-            // TODO: 7.10.2018. get location, get location weather and display data
-        } else {
-            // TODO: 7.10.2018. get weather for default location - Osijek
-        }
+    @Override
+    public void currentLocation(double latitude, double longitude) {
+        view.setLocation(new LatLng(latitude, longitude));
     }
 
+    @Override
+    public void currentLocationNotFound() {
+        view.setLocation(DEFAULT_LOCATION_OSIJEK);
+    }
+
+
+    private void getLocationWeather() {
+        if (locationPermissionGranted) {
+            view.findCurrentLocation();
+        } else {
+            view.setLocation(DEFAULT_LOCATION_OSIJEK);
+        }
+    }
 }

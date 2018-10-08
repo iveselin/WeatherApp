@@ -1,5 +1,7 @@
 package hr.ferit.iveselin.weatherapp.ui.main_screen;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public interface MainScreenInterface {
 
 
@@ -12,6 +14,12 @@ public interface MainScreenInterface {
         void askLocationPermission();
 
         void showMap();
+
+        void setLocation(LatLng latLng);
+
+        void findCurrentLocation();
+
+        void getLocationFromAddress(String searchCityString);
     }
 
 
@@ -26,5 +34,9 @@ public interface MainScreenInterface {
         void mapPressed();
 
         void locationPermissionGranted(boolean isGranted);
+
+        void currentLocation(double latitude, double longitude);
+
+        void currentLocationNotFound();
     }
 }

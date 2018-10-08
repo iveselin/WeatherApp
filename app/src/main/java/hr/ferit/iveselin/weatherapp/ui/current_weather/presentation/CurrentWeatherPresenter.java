@@ -1,5 +1,7 @@
 package hr.ferit.iveselin.weatherapp.ui.current_weather.presentation;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import hr.ferit.iveselin.weatherapp.data.model.WeatherResponse;
 import hr.ferit.iveselin.weatherapp.data.network.NetworkInterface;
 import hr.ferit.iveselin.weatherapp.data.network.NetworkManager;
@@ -10,10 +12,10 @@ public class CurrentWeatherPresenter implements CurrentWeatherInterface.Presente
     private CurrentWeatherInterface.View view;
 
     private NetworkInterface networkInterface;
-    private String city;
+    private LatLng currentLocation;
 
-    public CurrentWeatherPresenter() {
-        networkInterface = NetworkManager.getInstance();
+    public CurrentWeatherPresenter(NetworkInterface networkInterface) {
+        this.networkInterface = networkInterface;
     }
 
 
@@ -24,16 +26,19 @@ public class CurrentWeatherPresenter implements CurrentWeatherInterface.Presente
 
 
     @Override
-    public void viewReady(String city) {
-        // TODO: 7.10.2018. move to different method
-        this.city = city;
+    public void viewReady() {
 
-        networkInterface.getWeatherForCity(city, this);
+    }
+
+    @Override
+    public void locationChanged(LatLng location) {
+        this.currentLocation = location;
+        refreshClicked();
     }
 
     @Override
     public void refreshClicked() {
-        networkInterface.getWeatherForCity(city, this);
+        networkInterface.getWeatherForLocation(currentLocation, this);
     }
 
     @Override
