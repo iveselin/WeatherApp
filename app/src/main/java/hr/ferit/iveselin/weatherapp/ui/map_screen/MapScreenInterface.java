@@ -9,6 +9,9 @@ public interface MapScreenInterface {
         void moveMapCamera(LatLng location, float zoom);
 
         void showDialog();
+
+        void returnLocationResult(double latitude, double longitude);
+
     }
 
     interface Presenter {
@@ -21,5 +24,10 @@ public interface MapScreenInterface {
 
 
         void mapClicked(LatLng clickedLocation);
+
+        void locationAccepted();
+
+        void locationDeclined();
+
     }
 }

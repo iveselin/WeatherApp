@@ -43,8 +43,13 @@ public class CurrentWeatherPresenter implements CurrentWeatherInterface.Presente
 
     @Override
     public void onFinished(WeatherResponse data) {
-        view.showData(data);
+        if (data != null) {
+            view.showData(data);
+        } else {
+            view.showError();
+        }
     }
+
 
     @Override
     public void onFailure(Throwable throwable) {

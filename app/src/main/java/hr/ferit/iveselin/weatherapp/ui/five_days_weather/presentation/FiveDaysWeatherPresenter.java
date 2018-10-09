@@ -46,8 +46,12 @@ public class FiveDaysWeatherPresenter implements FiveDaysWeatherInterface.Presen
 
     @Override
     public void onFinished(ForecastResponse data) {
-        Log.d(TAG, "onFinished: displaying data: " + data.getList().toString());
-        view.showData(data.getList());
+        if (data.getList() != null) {
+            Log.d(TAG, "onFinished: displaying data: " + data.getList().toString());
+            view.showData(data.getList());
+        } else {
+            view.showError();
+        }
     }
 
     @Override

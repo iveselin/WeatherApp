@@ -167,7 +167,6 @@ public class MainActivity extends AppCompatActivity implements MainScreenInterfa
         }
     }
 
-
     @Override
     public void findCurrentLocation() {
         FusedLocationProviderClient locationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -201,6 +200,11 @@ public class MainActivity extends AppCompatActivity implements MainScreenInterfa
         Toast.makeText(this, R.string.error_message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void showEmptyInputError() {
+        locationInput.setError(getString(R.string.empty_input_error_text));
+    }
+
     @OnClick(R.id.location_search)
     void searchClicked() {
         presenter.searchPressed(locationInput.getText().toString());
@@ -222,7 +226,9 @@ public class MainActivity extends AppCompatActivity implements MainScreenInterfa
 
         if (resultCode == RESULT_OK) {
             if (requestCode == MAP_REQUEST_CODE) {
-                // TODO: 8.10.2018. extract data from mapactivity
+                double latitude = data.getDoubleExtra(KEY_PICKED_LATITUDE, 0);
+                double longitude = data.getDoubleExtra(KEY_PICKED_LONGITUDE, 0);
+                presenter.receivedLocationFromMap(latitude, longitude);
             }
         }
     }

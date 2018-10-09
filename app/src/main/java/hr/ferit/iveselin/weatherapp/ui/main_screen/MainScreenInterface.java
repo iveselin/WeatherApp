@@ -9,6 +9,8 @@ public interface MainScreenInterface {
 
         void showErrorMessage();
 
+        void showEmptyInputError();
+
         void checkLocationPermission();
 
         void askLocationPermission();
@@ -38,5 +40,7 @@ public interface MainScreenInterface {
         void currentLocation(double latitude, double longitude);
 
         void currentLocationNotFound();
+
+        void receivedLocationFromMap(double latitude, double longitude);
     }
 }

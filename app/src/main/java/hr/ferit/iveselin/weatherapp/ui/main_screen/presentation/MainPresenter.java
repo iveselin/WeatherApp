@@ -9,7 +9,7 @@ public class MainPresenter implements MainScreenInterface.Presenter {
 
     private static final String TAG = "MainPresenter";
 
-    public static final LatLng DEFAULT_LOCATION_OSIJEK = new LatLng(45.554962, 18.695514);
+    private static final LatLng DEFAULT_LOCATION_OSIJEK = new LatLng(45.554962, 18.695514);
 
     private MainScreenInterface.View view;
 
@@ -34,6 +34,10 @@ public class MainPresenter implements MainScreenInterface.Presenter {
 
     @Override
     public void searchPressed(String searchCityString) {
+        if (searchCityString.isEmpty()) {
+            view.showEmptyInputError();
+            return;
+        }
         view.getLocationFromAddress(searchCityString);
     }
 
@@ -70,5 +74,10 @@ public class MainPresenter implements MainScreenInterface.Presenter {
         } else {
             view.setLocation(DEFAULT_LOCATION_OSIJEK);
         }
+    }
+
+    @Override
+    public void receivedLocationFromMap(double latitude, double longitude) {
+        currentLocation(latitude, longitude);
     }
 }
