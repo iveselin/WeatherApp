@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationProvider;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -161,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements MainScreenInterfa
         }
 
         if (list.size() > 0) {
-            presenter.currentLocation(list.get(0).getLatitude(), list.get(0).getLongitude());
+            presenter.currentLocationFound(list.get(0).getLatitude(), list.get(0).getLongitude());
         } else {
             presenter.currentLocationNotFound();
         }
@@ -179,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements MainScreenInterfa
                     if (task.isSuccessful()) {
                         Location currentLocation = task.getResult();
                         if (currentLocation != null) {
-                            presenter.currentLocation(task.getResult().getLatitude(), task.getResult().getLongitude());
+                            presenter.currentLocationFound(task.getResult().getLatitude(), task.getResult().getLongitude());
                         }
                     } else {
                         Log.d(TAG, "onComplete: unsuccessful location");

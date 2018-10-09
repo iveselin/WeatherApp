@@ -37,7 +37,7 @@ public interface MainScreenInterface {
 
         void locationPermissionGranted(boolean isGranted);
 
-        void currentLocation(double latitude, double longitude);
+        void currentLocationFound(double latitude, double longitude);
 
         void currentLocationNotFound();
 

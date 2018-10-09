@@ -9,12 +9,12 @@ public class MainPresenter implements MainScreenInterface.Presenter {
 
     private static final String TAG = "MainPresenter";
 
-    private static final LatLng DEFAULT_LOCATION_OSIJEK = new LatLng(45.554962, 18.695514);
+    protected static final LatLng DEFAULT_LOCATION_OSIJEK = new LatLng(45.554962, 18.695514);
 
-    private MainScreenInterface.View view;
+    protected MainScreenInterface.View view;
 
-    private boolean locationPermissionGranted = false;
-    private LatLng currentLocation;
+    protected boolean locationPermissionGranted = false;
+    protected LatLng currentLocation;
 
     public MainPresenter() {
 
@@ -34,7 +34,7 @@ public class MainPresenter implements MainScreenInterface.Presenter {
 
     @Override
     public void searchPressed(String searchCityString) {
-        if (searchCityString.isEmpty()) {
+        if (searchCityString == null || searchCityString.isEmpty()) {
             view.showEmptyInputError();
             return;
         }
@@ -43,10 +43,10 @@ public class MainPresenter implements MainScreenInterface.Presenter {
 
     @Override
     public void mapPressed() {
-        if (locationPermissionGranted) {
-            view.showMap(currentLocation);
-        } else {
+        if (currentLocation == null) {
             view.showMap(DEFAULT_LOCATION_OSIJEK);
+        } else {
+            view.showMap(currentLocation);
         }
     }
 
@@ -57,7 +57,7 @@ public class MainPresenter implements MainScreenInterface.Presenter {
     }
 
     @Override
-    public void currentLocation(double latitude, double longitude) {
+    public void currentLocationFound(double latitude, double longitude) {
         this.currentLocation = new LatLng(latitude, longitude);
         view.setLocation(currentLocation);
     }
@@ -78,6 +78,6 @@ public class MainPresenter implements MainScreenInterface.Presenter {
 
     @Override
     public void receivedLocationFromMap(double latitude, double longitude) {
-        currentLocation(latitude, longitude);
+        currentLocationFound(latitude, longitude);
     }
 }
