@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements MainScreenInterfa
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+
         presenter = new MainPresenter();
         presenter.setView(this);
 

@@ -10,6 +10,7 @@ import hr.ferit.iveselin.weatherapp.data.model.WeatherResponse;
 public interface FiveDaysWeatherInterface {
 
     interface View {
+
         void showData(List<WeatherResponse> data);
 
         void showError();

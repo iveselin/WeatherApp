@@ -4,7 +4,6 @@ import com.google.android.gms.maps.model.LatLng;
 
 import hr.ferit.iveselin.weatherapp.data.model.WeatherResponse;
 import hr.ferit.iveselin.weatherapp.data.network.NetworkInterface;
-import hr.ferit.iveselin.weatherapp.data.network.NetworkManager;
 import hr.ferit.iveselin.weatherapp.ui.current_weather.CurrentWeatherInterface;
 
 public class CurrentWeatherPresenter implements CurrentWeatherInterface.Presenter, NetworkInterface.OnFinishedWeatherListener {

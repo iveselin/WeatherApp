@@ -50,6 +50,7 @@ public class MapActivity extends AppCompatActivity implements MapScreenInterface
         presenter.setView(this);
 
         ButterKnife.bind(this);
+
         getExtras();
         setUi();
     }

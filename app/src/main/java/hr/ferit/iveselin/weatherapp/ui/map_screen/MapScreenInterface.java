@@ -22,7 +22,6 @@ public interface MapScreenInterface {
 
         void startingLocation(LatLng startingLocation);
 
-
         void mapClicked(LatLng clickedLocation);
 
         void locationAccepted();

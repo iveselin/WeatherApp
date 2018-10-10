@@ -58,7 +58,6 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastViewHolder> {
         String dateTime = calendar.get(Calendar.DATE) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR) +
                 "\t" + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE);
 
-
         holder.temperature.setText(forecast.getMain().getTemp() + "°C");
         holder.dateTime.setText(dateTime);
         if (forecast.getRain() == null) {
