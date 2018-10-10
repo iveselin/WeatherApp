@@ -1,6 +1,7 @@
 package hr.ferit.iveselin.weatherapp.ui.main_screen.view;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -14,7 +15,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -93,6 +98,16 @@ public class MainActivity extends AppCompatActivity implements MainScreenInterfa
         geoDataClient = Places.getGeoDataClient(this);
         PlaceAutocompleteAdapter autocompleteAdapter = new PlaceAutocompleteAdapter(this, geoDataClient, CRO_BOUNDS, null);
         locationInput.setAdapter(autocompleteAdapter);
+        locationInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    searchClicked();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         List<String> tabTitles = new ArrayList<>();
         tabTitles.add("Current");
@@ -206,6 +221,14 @@ public class MainActivity extends AppCompatActivity implements MainScreenInterfa
 
     @OnClick(R.id.location_search)
     void searchClicked() {
+        locationInput.clearFocus();
+        try {
+            InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            in.hideSoftInputFromWindow(locationInput.getWindowToken(), 0);
+        } catch (NullPointerException e) {
+            Log.d(TAG, "searchClicked: " + e.getLocalizedMessage());
+        }
+
         presenter.searchPressed(locationInput.getText().toString());
     }
 

@@ -12,7 +12,7 @@ public class CurrentWeatherPresenter implements CurrentWeatherInterface.Presente
     private CurrentWeatherInterface.View view;
 
     private NetworkInterface networkInterface;
-    private LatLng currentLocation;
+    protected LatLng currentLocation;
 
     public CurrentWeatherPresenter(NetworkInterface networkInterface) {
         this.networkInterface = networkInterface;

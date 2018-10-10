@@ -6,11 +6,11 @@ import hr.ferit.iveselin.weatherapp.ui.map_screen.MapScreenInterface;
 
 public class MapPresenter implements MapScreenInterface.Presenter {
 
-    private static final float DEFAULT_ZOOM = 15f;
+    protected static final float DEFAULT_ZOOM = 15f;
 
-    private MapScreenInterface.View view;
+    protected MapScreenInterface.View view;
 
-    private LatLng location;
+    protected LatLng location;
 
     @Override
     public void setView(MapScreenInterface.View view) {

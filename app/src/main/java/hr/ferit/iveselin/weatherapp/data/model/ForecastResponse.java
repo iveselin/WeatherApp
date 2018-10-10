@@ -9,4 +9,8 @@ public class ForecastResponse {
     public List<WeatherResponse> getList() {
         return list;
     }
+
+    public void setList(List<WeatherResponse> list) {
+        this.list = list;
+    }
 }
