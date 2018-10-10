@@ -38,7 +38,11 @@ public class CurrentWeatherPresenter implements CurrentWeatherInterface.Presente
 
     @Override
     public void refreshClicked() {
-        networkInterface.getWeatherForLocation(currentLocation, this);
+        if (currentLocation != null) {
+            networkInterface.getWeatherForLocation(currentLocation, this);
+        } else {
+            view.showError();
+        }
     }
 
     @Override
