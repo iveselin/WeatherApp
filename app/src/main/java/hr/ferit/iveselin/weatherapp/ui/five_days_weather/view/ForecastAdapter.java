@@ -55,12 +55,18 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastViewHolder> {
         int offset = TimeZone.getDefault().getRawOffset();
         //unix timestamp is in seconds and its UTC
         calendar.setTimeInMillis(forecast.getDt() * 1000 + offset);
+        String dateTime = calendar.get(Calendar.DATE) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR) +
+                "\t" + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE);
 
 
         holder.temperature.setText(forecast.getMain().getTemp() + "°C");
-        holder.dateTime.setText(calendar.getTime().toString());
+        holder.dateTime.setText(dateTime);
+        if (forecast.getRain() == null) {
+            holder.rain.setText(R.string.no_rain_text);
+        } else {
+            holder.rain.setText(forecast.getRain().getMmOfRain() + "mm");
+        }
         ImageLoader.loadImage(context, forecast.getWeather().get(0).getIconId(), holder.icon);
-
     }
 
     @Override

@@ -93,7 +93,7 @@ public class CurrentWeatherView extends BaseViewPagerFragment implements Current
         } else {
             weatherRain.setVisibility(View.GONE);
         }
-        weatherPressure.setText(Float.toString(data.getMain().getPressure()));
+        weatherPressure.setText(Float.toString(data.getMain().getPressure()) + "hPa");
         ImageLoader.loadImage(getActivity(), data.getWeather().get(0).getIconId(), weatherIcon);
     }
 

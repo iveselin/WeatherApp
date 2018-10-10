@@ -7,4 +7,5 @@
     <string name="dialog_positive_text">Use that location</string>
     <string name="dialog_negative_text">Dismiss</string>
     <string name="empty_input_error_text">You have to write something</string>
+    <string name="no_rain_text">No rain</string>
 </resources>

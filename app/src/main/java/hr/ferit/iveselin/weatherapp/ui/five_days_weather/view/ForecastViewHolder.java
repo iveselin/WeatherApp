@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.concurrent.TimeoutException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hr.ferit.iveselin.weatherapp.R;
@@ -15,6 +17,8 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
     TextView dateTime;
     @BindView(R.id.item_temperature)
     TextView temperature;
+    @BindView(R.id.item_rain)
+    TextView rain;
     @BindView(R.id.item_icon)
     ImageView icon;
 
